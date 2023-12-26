@@ -1,0 +1,44 @@
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Github Contributions</title>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+      </head>
+      <body>
+        <div id="contributions-graph"></div>
+        
+        <script>
+          const username = 'sohi16'; 
+          
+          fetch(`http://localhost:3000/contributions/${username}`)
+            .then(response => response.json())
+            .then(data => {
+            const dates = Object.keys(data);
+              const counts = Object.values(data);
+      
+              const graphDiv = document.getElementById('contributions-graph');
+       const chartData = [{
+                x: dates,
+                y: counts,
+                type: 'bar',
+                marker: {
+                  color: 'rgb(50, 168, 82)' 
+                }
+              }];
+              const layout = {
+                title: 'GitHub Contributions',
+                xaxis: {
+                  title: 'Date'
+                },
+                yaxis: {
+                  title: 'Contributions'
+                }
+              };
+      
+              Plotly.newPlot(graphDiv, chartData, layout); 
+            })
+            .catch(error => console.error('Error:', error));
+        </script>
+      </body>
+</html>
